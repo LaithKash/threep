@@ -1,4 +1,4 @@
-#include <PID_v1.h>
+
 
 #include <ESP32Encoder.h>
 
@@ -16,13 +16,6 @@ const int pwmChannel = 0;
 const int resolution = 8;
 int dutyCycle = 255;
 
-ESP32Encoder encoder;
-
-ESP32Encoder encoder2;
-
-
-
-int64_t averageEncoders = (encoder.getCount()+encoder2.getCount())/2;
 
 void setup() {
   // sets the pins as outputs:
@@ -45,13 +38,7 @@ void setup() {
   Serial.print("Testing DC Motor...");
 
   // attach encoder to pins
-  encoder.attachHalfQuad(36,39); 
 
-  encoder2.attachHalfQuad(34,35);
-
-  encoder.clearCount();
-
-  encoder2.clearCount();
 
 
 }
@@ -81,26 +68,30 @@ void goBackwards() {
 
 void loop() {
 
-  int64_t averageEncoders = (encoder.getCount()+encoder2.getCount())/2;
   
    // Set motor speed
    ledcWrite(pwmChannel, dutyCycle);
 
    
-   float distanceNeeded = 286; //round(1 / distancePerRotation); 1 meter is 241 
-   if((int64_t)averageEncoders <= distanceNeeded) {
-     // Move the DC motor forward at maximum speed
-     Serial.println("Moving Forward");
-     
-     goForwards();
-   } else {
-     // Stop the DC motor
-     Serial.println("Motor stopped");
-   
-     stopMotors();
-   } 
+  goForwards();
 
-     printf("The encoder count is %jd and enc1 is: %jd and enc2 is: %jd\n", averageEncoders, encoder.getCount(), encoder2.getCount());
+  delay(3000);
+
+  goBackwards();
+
+  delay(3000);
+
+  goForwards();
+
+  delay(3000);
+
+  stopMotors();
+
+  delay(30000);
+
+
+
+
 
 
 
