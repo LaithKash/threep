@@ -10,4 +10,6 @@ void loop() {
 
   printf("next commit");
 
+  printf("new commit");
+
 }
