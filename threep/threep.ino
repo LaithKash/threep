@@ -6,6 +6,8 @@ void setup() {
 void loop() {
   // put your main code here, to run repeatedly:
 
+  int steeringAngle = 180;
+
   printf("test");
 
   printf("next commit");
